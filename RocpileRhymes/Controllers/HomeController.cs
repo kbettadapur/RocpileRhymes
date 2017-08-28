@@ -23,11 +23,11 @@ namespace RocpileRhymes.Controllers
 
             return View();
         }
-        public ActionResult Search(String search)
+        public ActionResult Search(String query)
         {
             try
             {
-                SearchVideo(search);
+                SearchVideo(query);
             } catch(Exception e) 
             {
                 return Content(e.ToString());
@@ -35,7 +35,7 @@ namespace RocpileRhymes.Controllers
             string results = "";
             foreach (SearchResult title in videos)
             {
-                results += "<a href =  \"https://youtube.com/watch?v=" + title.Id.VideoId + "\">" + title.Snippet.Title + "</a> | <br />";
+                results += "<a target=\"_blank\" href =  \"https://youtube.com/watch?v=" + title.Id.VideoId + "\">" + title.Snippet.Title + "</a> <br />";
             }
             return Content(results);
         }
@@ -47,7 +47,7 @@ namespace RocpileRhymes.Controllers
                 ApplicationName = this.GetType().ToString()
             });
             var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = search; // Replace with your search term.
+            searchListRequest.Q = search; 
             searchListRequest.MaxResults = 10;
 
             // Call the search.list method to retrieve results matching the specified query term.
